@@ -5,11 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
-import { Key, Save } from 'lucide-react';
+import { Key, Save, FileText } from 'lucide-react';
 
 const Credentials = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [setor, setSetor] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,7 +21,7 @@ const Credentials = () => {
     setTimeout(() => {
       // Store in localStorage for demo purposes
       // In a real app, this would be stored more securely
-      localStorage.setItem('sei-credentials', JSON.stringify({ username, password }));
+      localStorage.setItem('sei-credentials', JSON.stringify({ username, password, setor }));
       
       toast({
         title: "Credenciais salvas",
@@ -35,9 +36,10 @@ const Credentials = () => {
     const savedCredentials = localStorage.getItem('sei-credentials');
     if (savedCredentials) {
       try {
-        const { username: savedUsername, password: savedPassword } = JSON.parse(savedCredentials);
+        const { username: savedUsername, password: savedPassword, setor: savedSetor } = JSON.parse(savedCredentials);
         setUsername(savedUsername);
         setPassword(savedPassword);
+        setSetor(savedSetor);
       } catch (error) {
         console.error('Error parsing saved credentials:', error);
       }
@@ -91,6 +93,19 @@ const Credentials = () => {
                   className="border-sei-200"
                 />
               </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium" htmlFor="setor">
+                  Setor
+                </label>
+                <Input
+                  id="setor"
+                  value={setor}
+                  onChange={(e) => setSetor(e.target.value)}
+                  placeholder="Seu setor no SEI"
+                  icon={FileText}
+                  className="border-sei-200"
+                />
+              </div>
             </CardContent>
             
             <CardFooter>
@@ -118,3 +133,4 @@ const Credentials = () => {
 };
 
 export default Credentials;
+
