@@ -162,8 +162,8 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const calculateMaxResponseTimes = (data) => {
-    const unitTimes = {};
+  const calculateMaxResponseTimes = (data: HistoricoItem[]) => {
+    const unitTimes: { [key: string]: number } = {};
     
     data.forEach(item => {
       if (item.Unidade && typeof item.diasEntreDocumentos === 'number') {
@@ -178,9 +178,9 @@ const Dashboard = () => {
       .filter(([unidade]) => unidade.trim() !== '')
       .map(([unidade, maxDias]) => ({
         unidade,
-        maxDias,
+        maxDias: maxDias as number,
       }))
-      .sort((a, b) => b.maxDias - a.maxDias);
+      .sort((a, b) => (b.maxDias as number) - (a.maxDias as number));
   };
 
   useEffect(() => {
@@ -232,6 +232,40 @@ const Dashboard = () => {
         });
 
         setProcessedData(processedData);
+        
+        // Atualiza os tempos máximos de resposta
+        const maxTimes = calculateMaxResponseTimes(processedData);
+        setMaxResponseTimes(maxTimes);
+
+        // Calcula métricas por usuário
+        const userMetricsData = processedData.reduce((acc, item) => {
+          if (!item.CPF) return acc;
+
+          const existingMetric = acc.find(metric => metric.cpf === item.CPF);
+          
+          if (existingMetric) {
+            existingMetric.Aparicao += 1;
+            if (item.diasEntreDocumentos) {
+              const dias = Math.abs(item.diasEntreDocumentos);
+              existingMetric.Dias_Maximo = Math.max(existingMetric.Dias_Maximo, dias);
+              existingMetric.Dias_Acumulados += dias;
+            }
+          } else {
+            acc.push({
+              cpf: item.CPF,
+              Dias_Maximo: item.diasEntreDocumentos ? Math.abs(item.diasEntreDocumentos) : 0,
+              Dias_Acumulados: item.diasEntreDocumentos ? Math.abs(item.diasEntreDocumentos) : 0,
+              Aparicao: 1
+            });
+          }
+          return acc;
+        }, [] as UserMetric[]);
+
+        setUserMetrics(userMetricsData);
+
+        console.log('Dados processados:', processedData);
+        console.log('Tempos máximos:', maxTimes);
+        console.log('Métricas por usuário:', userMetricsData);
       }
     }
   }, [selectedProcess, historicoData]);
