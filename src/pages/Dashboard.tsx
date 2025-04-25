@@ -9,8 +9,17 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { useParams } from 'react-router-dom';
 import { processQueries } from '@/services/supabase';
 
-const supabaseUrl = "https://yxerhuojxxxckatylftd.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZXJodW9qeHh4Y2thdHlsZnRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MDk3NDQsImV4cCI6MjA2MDM4NTc0NH0.u2NNzl2E3nI2H5OWquif0C3EL3SKEydwxtmiGoqwjMs"; // Substitua pela sua chave
+interface ImportMetaEnv {
+  readonly VITE_SUPABASE_URL: string;
+  readonly VITE_SUPABASE_KEY: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const COLORS = ['#0c93e4', '#064f83', '#36adf6', '#005d9e'];
@@ -24,7 +33,6 @@ const RadarChartComponent = ({ radarData }) => (
   </RadarChart>
 );
 
-// Tipagem para as métricas por usuário
 interface UserMetric {
   cpf: string;
   Dias_Maximo: number;
@@ -32,15 +40,32 @@ interface UserMetric {
   Aparicao: number;
 }
 
+interface HistoricoItem {
+  id: string;
+  'Data/Hora': string;
+  Unidade: string;
+  CPF: string;
+  Processo: string;
+  Protocolo: string;
+  Documento: string;
+  Objeto?: string;
+  diasEntreDocumentos?: number;
+  diasAcumulados?: number;
+}
+
 const Dashboard = () => {
   const [totalProcesses, setTotalProcesses] = useState(0);
-  const [historicoData, setHistoricoData] = useState([]);
+  const [historicoData, setHistoricoData] = useState<any[]>([]);
+  const [concludedCount, setConcludedCount] = useState<number>(0);
   const [uniqueProcesses, setUniqueProcesses] = useState([]);
   const [selectedProcess, setSelectedProcess] = useState('');
   const [processedData, setProcessedData] = useState<any[]>([]);
   const [maxResponseTimes, setMaxResponseTimes] = useState<{ unidade: string; maxDias: number }[]>([]);
   const [unitMetrics, setUnitMetrics] = useState<{ unidade: string; Dias_Maximo: number; Dias_Acumulados: number; Aparicao: number }[]>([]);
   const [userMetrics, setUserMetrics] = useState<UserMetric[]>([]);
+  const [overdueProcessesCount, setOverdueProcessesCount] = useState<number>(0);
+  const [overdueDocumentsCount, setOverdueDocumentsCount] = useState<number>(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,6 +91,47 @@ const Dashboard = () => {
         console.error('Erro ao carregar histórico:', historicoError);
       } else {
         setHistoricoData(historicoData);
+
+        // Calcula Processos Concluídos
+        const concluidosSet = new Set<string>();
+        historicoData.forEach(item => {
+          if (item.Documento?.includes('Homologação')) {
+            concluidosSet.add(item.Processo);
+          }
+        });
+        setConcludedCount(concluidosSet.size);
+
+        // Agrupa os processos
+        const processosPorId = new Map();
+        historicoData.forEach(item => {
+          if (!processosPorId.has(item.Processo)) {
+            processosPorId.set(item.Processo, []);
+          }
+          processosPorId.get(item.Processo).push(item);
+        });
+
+        // Para cada processo, calcula os dias desde a última movimentação
+        let atrasados = 0;
+        processosPorId.forEach((registros) => {
+          if (registros.length > 0) {
+            // Ordena os registros por data, mais recente primeiro
+            registros.sort((a, b) => 
+              new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()
+            );
+
+            const ultimaData = new Date(registros[0]['Data/Hora']);
+            const hoje = new Date();
+            const diasDesdeUltima = Math.floor(
+              (hoje.getTime() - ultimaData.getTime()) / (1000 * 60 * 60 * 24)
+            );
+
+            if (diasDesdeUltima > 15) {
+              atrasados++;
+            }
+          }
+        });
+
+        setOverdueProcessesCount(atrasados);
       }
 
       // Fetch unique processes with objects
@@ -79,6 +145,17 @@ const Dashboard = () => {
       } else {
         const uniqueProcessesSet = new Set(uniqueProcessData.map(item => `${item.Processo} - ${item.Objeto}`));
         setUniqueProcesses(Array.from(uniqueProcessesSet));
+      }
+
+      // Processar dados para calcular a métrica de documentos atrasados
+      if (processedData.length > 0) {
+        const overdueDocsCount = processedData.reduce((count, item) => {
+          if (item.diasEntreDocumentos > 15) {
+            return count + 1;
+          }
+          return count;
+        }, 0);
+        setOverdueDocumentsCount(overdueDocsCount);
       }
     };
 
@@ -97,7 +174,6 @@ const Dashboard = () => {
       }
     });
 
-    // Filter out empty unit names and sort by max days
     return Object.entries(unitTimes)
       .filter(([unidade]) => unidade.trim() !== '')
       .map(([unidade, maxDias]) => ({
@@ -109,14 +185,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (selectedProcess && historicoData.length > 0) {
-      const filteredData = historicoData.filter(
-        item => `${item.Processo} - ${item.Objeto}` === selectedProcess
+      const processData = historicoData.filter(
+        item => item.Processo === selectedProcess.split(' - ')[0]
       );
 
-      if (filteredData.length > 0) {
-        const sortedData = [...filteredData].sort((a, b) => 
-          new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()
-        );
+      if (processData.length > 0) {
+        const sortedData = [...processData].sort((a, b) => {
+          const dateA = new Date(a['Data/Hora'] as string).getTime();
+          const dateB = new Date(b['Data/Hora'] as string).getTime();
+          return dateB - dateA;
+        });
 
         const currentDate = new Date();
         const lastRecord = {
@@ -128,22 +206,22 @@ const Dashboard = () => {
           Protocolo: '',
           Documento: 'Desde a última movimentação'
         };
-        const dataWithCurrent = [lastRecord, ...sortedData];
 
+        const dataWithCurrent = [lastRecord, ...sortedData];
         const processedData = dataWithCurrent.map((item, index, array) => {
-          const currentDate = new Date(item['Data/Hora']);
+          const currentDate = new Date(item['Data/Hora'] as string).getTime();
           
-          let diasEntreDocumentos = null;
+          let diasEntreDocumentos: number | null = null;
           if (index < array.length - 1) {
-            const nextDate = new Date(array[index + 1]['Data/Hora']);
-            const timeDiff = nextDate.getTime() - currentDate.getTime();
-            if (formatDate(currentDate) !== formatDate(nextDate)) {
+            const nextDate = new Date(array[index + 1]['Data/Hora'] as string).getTime();
+            const timeDiff = nextDate - currentDate;
+            if (formatDate(new Date(currentDate)) !== formatDate(new Date(nextDate))) {
               diasEntreDocumentos = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             }
           }
           
-          const firstDate = new Date(array[array.length - 1]['Data/Hora']);
-          const timeDiffTotal = currentDate.getTime() - firstDate.getTime();
+          const firstDate = new Date(array[array.length - 1]['Data/Hora'] as string).getTime();
+          const timeDiffTotal = currentDate - firstDate;
           const diasAcumulados = Math.floor(timeDiffTotal / (1000 * 60 * 60 * 24));
           
           return {
@@ -154,43 +232,7 @@ const Dashboard = () => {
         });
 
         setProcessedData(processedData);
-        
-        // Calculate max response times from the processed data
-        const maxTimes = calculateMaxResponseTimes(processedData);
-        setMaxResponseTimes(maxTimes);
-
-        // === agrupa por CPF ===
-        const mapMetrics: Record<string, UserMetric> = processedData.reduce((acc, item) => {
-          const cpf = item.CPF || '';
-          const dias = typeof item.diasEntreDocumentos === 'number'
-            ? Math.abs(item.diasEntreDocumentos)
-            : 0;
-
-          if (!acc[cpf]) {
-            acc[cpf] = {
-              cpf,
-              Dias_Maximo: dias,
-              Dias_Acumulados: dias,
-              Aparicao: 1,
-            };
-          } else {
-            acc[cpf].Dias_Maximo   = Math.max(acc[cpf].Dias_Maximo, dias);
-            acc[cpf].Dias_Acumulados += dias;
-            acc[cpf].Aparicao      += 1;
-          }
-          return acc;
-        }, {} as Record<string, UserMetric>);
-
-        // transforma em array e ordena (opcional)
-        const metricsArray = Object.values(mapMetrics)
-          .sort((a, b) => a.Dias_Maximo - b.Dias_Maximo);
-
-        setUserMetrics(metricsArray);
       }
-    } else {
-      setProcessedData([]);
-      setMaxResponseTimes([]);
-      setUserMetrics([]);
     }
   }, [selectedProcess, historicoData]);
 
@@ -201,6 +243,10 @@ const Dashboard = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
+
+  const filteredProcesses = uniqueProcesses.filter(processo =>
+    processo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <Layout>
@@ -230,9 +276,9 @@ const Dashboard = () => {
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">
-                Processos Concluídos
+                Processos Homologados
               </p>
-              <h3 className="text-2xl font-bold">45</h3>
+              <h3 className="text-2xl font-bold">{concludedCount}</h3>
             </div>
           </CardContent>
         </Card>
@@ -246,7 +292,7 @@ const Dashboard = () => {
               <p className="text-sm font-medium text-muted-foreground">
                 Em Andamento
               </p>
-              <h3 className="text-2xl font-bold">45</h3>
+              <h3 className="text-2xl font-bold">{totalProcesses - concludedCount}</h3>
             </div>
           </CardContent>
         </Card>
@@ -258,21 +304,28 @@ const Dashboard = () => {
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">
-                Pendentes
+                Processos Atrasados
               </p>
-              <h3 className="text-2xl font-bold">33</h3>
+              <h3 className="text-2xl font-bold">{overdueProcessesCount}</h3>
             </div>
           </CardContent>
         </Card>
       </div>
 
       <div className="mb-8">
+        <input
+          type="text"
+          placeholder="Digite uma palavra-chave para filtrar processos"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="mb-4 p-2 border border-gray-300 rounded w-full"
+        />
         <Select onValueChange={setSelectedProcess}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione um Processo" />
           </SelectTrigger>
           <SelectContent>
-            {uniqueProcesses.map((processo, index) => (
+            {filteredProcesses.map((processo, index) => (
               <SelectItem key={index} value={processo}>
                 {processo}
               </SelectItem>
@@ -330,7 +383,6 @@ const Dashboard = () => {
             <Card className="border-sei-100 mt-6">
               <CardHeader>
                 <CardTitle>Tempo Máximo de Resposta por Unidade</CardTitle>
-                {/* <CardDescription>Dias máximos entre documentos por unidade</CardDescription> */}
               </CardHeader>
               <CardContent>
                 <div className="h-[400px]">
@@ -360,7 +412,6 @@ const Dashboard = () => {
         <Card className="border-sei-100 mt-6">
           <CardHeader>
             <CardTitle>Análise Temporal por Usuário</CardTitle>
-            
             <CardDescription>
               • Laranja = indica o maior período (dias) para a produção de um documento
               <br />
@@ -380,10 +431,9 @@ const Dashboard = () => {
                 <YAxis dataKey="cpf" type="category" width={150} />
                 <Tooltip formatter={(value) => [value, '']} />
                 <Legend />
-                
-                <Bar dataKey="Dias_Maximo"   stackId="a" fill="orange"   name="Dias Máximo" />
+                <Bar dataKey="Dias_Maximo" stackId="a" fill="orange" name="Dias Máximo" />
                 <Bar dataKey="Dias_Acumulados" stackId="a" fill="green" name="Dias Acumulados" />
-                <Bar dataKey="Aparicao"      stackId="a" fill="blue"     name="Aparições" />
+                <Bar dataKey="Aparicao" stackId="a" fill="blue" name="Aparições" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
