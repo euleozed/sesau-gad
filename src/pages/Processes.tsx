@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -6,44 +5,46 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileSearch, Plus, Trash2, Eye, Edit } from 'lucide-react';
-
-interface Process {
-  id: string;
-  number: string;
-  subject: string;
-  createdAt: string;
-}
+import { FileSearch, Plus, Trash2, Edit } from 'lucide-react';
+import { processQueries, Process } from '@/services/supabase';
 
 const Processes = () => {
   const [processes, setProcesses] = useState<Process[]>([]);
   const [processNumber, setProcessNumber] = useState('');
   const [processSubject, setProcessSubject] = useState('');
+  const [processStatus, setProcessStatus] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentProcessId, setCurrentProcessId] = useState<string | null>(null);
+  const [statistics, setStatistics] = useState<any>(null);
   
-  // Load processes from localStorage on component mount
+  // Load processes and statistics from Supabase on component mount
   useEffect(() => {
-    const savedProcesses = localStorage.getItem('sei-processes');
-    if (savedProcesses) {
-      try {
-        setProcesses(JSON.parse(savedProcesses));
-      } catch (error) {
-        console.error('Error parsing saved processes:', error);
+    const fetchData = async () => {
+      // Fetch processes
+      const { data: processesData, error: processesError } = await processQueries.getAllProcesses();
+      if (processesError) {
+        console.error('Erro ao carregar processos:', processesError);
+        return;
       }
-    }
+      setProcesses(processesData || []);
+
+      // Fetch statistics
+      const { data: statsData, error: statsError } = await processQueries.getProcessStatistics();
+      if (statsError) {
+        console.error('Erro ao carregar estatísticas:', statsError);
+        return;
+      }
+      setStatistics(statsData);
+    };
+
+    fetchData();
   }, []);
 
-  // Save processes to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('sei-processes', JSON.stringify(processes));
-  }, [processes]);
-
-  const handleAddProcess = () => {
-    if (!processNumber.trim() || !processSubject.trim()) {
+  const handleAddProcess = async () => {
+    if (!processNumber.trim() || !processSubject.trim() || !processStatus.trim()) {
       toast({
         title: "Campos obrigatórios",
         description: "Preencha todos os campos.",
@@ -52,43 +53,43 @@ const Processes = () => {
       return;
     }
 
-    if (isEditing && currentProcessId) {
-      // Update existing process
-      setProcesses(processes.map(process => 
-        process.id === currentProcessId 
-          ? { ...process, number: processNumber, subject: processSubject }
-          : process
-      ));
-      
+    const processData = {
+      processo: processNumber,
+      objeto: processSubject,
+      status: processStatus,
+    };
+
+    const { error } = await processQueries.upsertProcess(processData);
+
+    if (error) {
+      console.error('Erro ao adicionar ou atualizar processo:', error);
       toast({
-        title: "Processo atualizado",
-        description: `Processo ${processNumber} atualizado com sucesso.`,
+        title: "Erro",
+        description: "Ocorreu um erro ao salvar o processo.",
+        variant: "destructive",
       });
     } else {
-      // Add new process
-      const newProcess: Process = {
-        id: Date.now().toString(),
-        number: processNumber,
-        subject: processSubject,
-        createdAt: new Date().toISOString(),
-      };
-      
-      setProcesses([...processes, newProcess]);
-      
       toast({
-        title: "Processo adicionado",
-        description: `Processo ${processNumber} adicionado com sucesso.`,
+        title: isEditing ? "Processo atualizado" : "Processo adicionado",
+        description: `Processo ${processNumber} ${isEditing ? 'atualizado' : 'adicionado'} com sucesso.`,
       });
-    }
 
-    // Reset form and close dialog
-    resetForm();
-    setIsDialogOpen(false);
+      // Reset form and close dialog
+      resetForm();
+      setIsDialogOpen(false);
+
+      // Reload processes and statistics
+      const { data: processesData } = await processQueries.getAllProcesses();
+      const { data: statsData } = await processQueries.getProcessStatistics();
+      setProcesses(processesData || []);
+      setStatistics(statsData);
+    }
   };
 
   const openEditDialog = (process: Process) => {
-    setProcessNumber(process.number);
-    setProcessSubject(process.subject);
+    setProcessNumber(process.processo);
+    setProcessSubject(process.objeto);
+    setProcessStatus(process.status);
     setCurrentProcessId(process.id);
     setIsEditing(true);
     setIsDialogOpen(true);
@@ -104,24 +105,33 @@ const Processes = () => {
   const resetForm = () => {
     setProcessNumber('');
     setProcessSubject('');
+    setProcessStatus('');
     setIsEditing(false);
     setCurrentProcessId(null);
   };
 
-  const deleteProcess = (id: string) => {
+  const deleteProcess = async (id: string) => {
     if (confirm("Tem certeza que deseja excluir este processo?")) {
-      setProcesses(processes.filter(process => process.id !== id));
-      
-      toast({
-        title: "Processo excluído",
-        description: "O processo foi removido com sucesso.",
-      });
-    }
-  };
+      const { error } = await processQueries.deleteProcess(id);
+      if (error) {
+        console.error('Erro ao excluir processo:', error);
+        toast({
+          title: "Erro",
+          description: "Ocorreu um erro ao excluir o processo.",
+          variant: "destructive",
+        });
+      } else {
+        setProcesses(processes.filter(process => process.id !== id));
+        toast({
+          title: "Processo excluído",
+          description: "O processo foi removido com sucesso.",
+        });
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR');
+        // Update statistics after deletion
+        const { data: statsData } = await processQueries.getProcessStatistics();
+        setStatistics(statsData);
+      }
+    }
   };
 
   return (
@@ -132,6 +142,30 @@ const Processes = () => {
           <Plus className="h-4 w-4 mr-2" /> Cadastrar Processo
         </Button>
       </div>
+
+      {statistics && (
+        <Card className="border-sei-100 shadow-md mb-6">
+          <CardHeader>
+            <CardTitle>Estatísticas</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center">
+                <p className="text-2xl font-bold">{statistics.total}</p>
+                <p className="text-sm text-muted-foreground">Total de Processos</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-green-600">{statistics.activeCount}</p>
+                <p className="text-sm text-muted-foreground">Processos Ativos</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-red-600">{statistics.inactiveCount}</p>
+                <p className="text-sm text-muted-foreground">Processos Inativos</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="border-sei-100 shadow-md">
         <CardHeader>
@@ -153,16 +187,24 @@ const Processes = () => {
                 <TableRow>
                   <TableHead>Número do Processo</TableHead>
                   <TableHead>Objeto</TableHead>
-                  <TableHead>Data de Cadastro</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {processes.map((process) => (
                   <TableRow key={process.id}>
-                    <TableCell className="font-medium">{process.number}</TableCell>
-                    <TableCell>{process.subject}</TableCell>
-                    <TableCell>{formatDate(process.createdAt)}</TableCell>
+                    <TableCell className="font-medium">{process.processo}</TableCell>
+                    <TableCell>{process.objeto}</TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-1 rounded-full text-sm ${
+                        process.status === 'ativo' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {process.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                      </span>
+                    </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Button 
@@ -229,6 +271,22 @@ const Processes = () => {
                 className="border-sei-200"
                 rows={4}
               />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="process-status">
+                Status
+              </label>
+              <select
+                id="process-status"
+                value={processStatus}
+                onChange={(e) => setProcessStatus(e.target.value)}
+                className="w-full rounded-md border border-sei-200 bg-background px-3 py-2"
+              >
+                <option value="">Selecione o status</option>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+              </select>
             </div>
           </div>
           

