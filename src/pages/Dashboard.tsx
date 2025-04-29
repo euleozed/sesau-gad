@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line } from 'recharts';
 import { FileCheck, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { createClient } from '@supabase/supabase-js';
@@ -66,6 +66,7 @@ const Dashboard = () => {
   const [overdueProcessesCount, setOverdueProcessesCount] = useState<number>(0);
   const [overdueDocumentsCount, setOverdueDocumentsCount] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [documentMetrics, setDocumentMetrics] = useState<{ documento: string; maxDias: number }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -183,6 +184,29 @@ const Dashboard = () => {
       .sort((a, b) => (b.maxDias as number) - (a.maxDias as number));
   };
 
+  const calculateDocumentMetrics = (data: HistoricoItem[]) => {
+    const docTimes: { [key: string]: { maxDias: number; lastDate: string } } = {};
+
+    data.forEach(item => {
+      if (item.Documento && typeof item.diasEntreDocumentos === 'number') {
+        const dias = Math.abs(item.diasEntreDocumentos);
+        if (!docTimes[item.Documento] || dias > docTimes[item.Documento].maxDias) {
+          docTimes[item.Documento] = { maxDias: dias, lastDate: item['Data/Hora'] };
+        }
+      }
+    });
+
+    return Object.entries(docTimes)
+      .filter(([documento]) => documento.trim() !== '')
+      .map(([documento, { maxDias, lastDate }]) => ({
+        documento,
+        maxDias,
+        lastDate,
+      }))
+      .sort((b, a) => new Date(b.lastDate).getTime() - new Date(a.lastDate).getTime())
+      .slice(0, 10);
+  };
+
   useEffect(() => {
     if (selectedProcess && historicoData.length > 0) {
       const processData = historicoData.filter(
@@ -262,6 +286,10 @@ const Dashboard = () => {
         }, [] as UserMetric[]);
 
         setUserMetrics(userMetricsData);
+
+        // Calculate document metrics
+        const docMetrics = calculateDocumentMetrics(processedData);
+        setDocumentMetrics(docMetrics);
 
         console.log('Dados processados:', processedData);
         console.log('Tempos máximos:', maxTimes);
@@ -469,6 +497,47 @@ const Dashboard = () => {
                 <Bar dataKey="Dias_Acumulados" stackId="a" fill="green" name="Dias Acumulados" />
                 <Bar dataKey="Aparicao" stackId="a" fill="blue" name="Aparições" />
               </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
+
+      {documentMetrics.length > 0 && (
+        <Card className="border-sei-100 mt-6">
+          <CardHeader>
+            <CardTitle>Linha do Tempo do Processo</CardTitle>
+            <CardDescription>
+              O gráfico mostra a linha do tempo do processo, desde a última movimentação até a data atual, considerando o top 10 de documentos que tiveram o maior intervalo de tempo entre movimentações
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart
+                data={documentMetrics}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <XAxis 
+                  dataKey="documento" 
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
+                  interval={0}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis />
+                <Tooltip 
+                  formatter={(value) => [`${value} dias`, 'Tempo Máximo']}
+                  labelFormatter={(label) => `Documento: ${label}`}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="maxDias"
+                  stroke="#0c93e4"
+                  name="Dias entre Movimentações"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>

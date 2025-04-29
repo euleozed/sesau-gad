@@ -31,7 +31,7 @@ const Sidebar = () => {
         <div className="flex items-center justify-between h-16 px-4">
           {isOpen && (
             <h1 className="text-xl font-bold text-sidebar-foreground">
-              SEI Vista Azul
+              Menu
             </h1>
           )}
           <button
