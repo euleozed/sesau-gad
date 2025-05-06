@@ -88,6 +88,8 @@ const Dashboard = () => {
           return;
         }
         
+
+        
         const csvText = await response.text();
         
         // Parse CSV (melhorado para lidar com campos entre aspas)
