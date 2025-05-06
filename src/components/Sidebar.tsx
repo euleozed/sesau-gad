@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Key, FileSearch, Menu, X, LogOut } from 'lucide-react';
+import { LayoutDashboard, Menu, X, BarChart2 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -14,10 +13,10 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  // Adicionar a nova página "Produção por Setor"
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
-    { name: 'Credenciais', path: '/credentials', icon: <Key className="h-5 w-5" /> },
-    { name: 'Processos', path: '/processes', icon: <FileSearch className="h-5 w-5" /> },
+    { name: 'Produção por Setor', path: '/producao', icon: <BarChart2 className="h-5 w-5" /> },
   ];
 
   return (
@@ -59,16 +58,6 @@ const Sidebar = () => {
                 {isOpen && <span className="ml-2">{item.name}</span>}
               </Link>
             ))}
-            
-            <button
-              onClick={logout}
-              className="flex items-center w-full px-2 py-3 text-sidebar-foreground rounded-md hover:bg-sidebar-accent/50 transition-colors"
-            >
-              <div className="mx-2">
-                <LogOut className="h-5 w-5" />
-              </div>
-              {isOpen && <span className="ml-2">Sair</span>}
-            </button>
           </nav>
         </div>
       </div>

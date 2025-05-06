@@ -4,23 +4,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line } from 'recharts';
 import { FileCheck, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { createClient } from '@supabase/supabase-js';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { useParams } from 'react-router-dom';
-import { processQueries } from '@/services/supabase';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
-interface ImportMetaEnv {
-  readonly VITE_SUPABASE_URL: string;
-  readonly VITE_SUPABASE_KEY: string;
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Importação do CSV com caminho correto para a pasta pública
+const csvPath = '/backend/df.csv';
 
 const COLORS = ['#0c93e4', '#064f83', '#36adf6', '#005d9e'];
 
@@ -53,11 +43,24 @@ interface HistoricoItem {
   diasAcumulados?: number;
 }
 
+// Interface para os dados do CSV
+interface CsvHistoricoItem {
+  [key: string]: string;
+  id: string;
+  'Data/Hora': string;
+  Unidade: string;
+  CPF: string;
+  Processo: string;
+  Protocolo: string;
+  Documento: string;
+  Objeto: string;
+}
+
 const Dashboard = () => {
   const [totalProcesses, setTotalProcesses] = useState(0);
-  const [historicoData, setHistoricoData] = useState<any[]>([]);
+  const [historicoData, setHistoricoData] = useState<CsvHistoricoItem[]>([]);
   const [concludedCount, setConcludedCount] = useState<number>(0);
-  const [uniqueProcesses, setUniqueProcesses] = useState([]);
+  const [uniqueProcesses, setUniqueProcesses] = useState<string[]>([]);
   const [selectedProcess, setSelectedProcess] = useState('');
   const [processedData, setProcessedData] = useState<any[]>([]);
   const [maxResponseTimes, setMaxResponseTimes] = useState<{ unidade: string; maxDias: number }[]>([]);
@@ -70,93 +73,142 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch all data and count distinct 'Processo'
-      const { data: processData, error: processError } = await supabase
-        .from('historico')
-        .select('Processo');
-
-      if (processError) {
-        console.error('Erro ao carregar processos:', processError);
-      } else {
-        const uniqueProcessCount = new Set(processData.map(item => item.Processo)).size;
-        setTotalProcesses(uniqueProcessCount);
-      }
-
-      // Fetch all historical data
-      const { data: historicoData, error: historicoError } = await supabase
-        .from('historico')
-        .select('*')
-        .order('"Data/Hora"', { ascending: false });
-
-      if (historicoError) {
-        console.error('Erro ao carregar histórico:', historicoError);
-      } else {
-        setHistoricoData(historicoData);
-
-        // Calcula Processos Concluídos
-        const concluidosSet = new Set<string>();
-        historicoData.forEach(item => {
-          if (item.Documento?.includes('Homologação')) {
-            concluidosSet.add(item.Processo);
+      try {
+        // Convertemos os dados do CSV para um array de objetos
+        const response = await fetch(csvPath);
+        
+        if (!response.ok) {
+          if (response.status === 404) {
+            console.error('Arquivo CSV não encontrado. Certifique-se de que o arquivo existe em public/backend/df.csv');
+            alert('Não foi possível carregar os dados. O arquivo de dados não foi encontrado. Execute o script de processamento para gerar os dados.');
+          } else {
+            console.error(`Erro ao carregar o arquivo CSV: ${response.status} ${response.statusText}`);
+            alert(`Erro ao carregar os dados: ${response.status} ${response.statusText}`);
           }
-        });
-        setConcludedCount(concluidosSet.size);
-
-        // Agrupa os processos
-        const processosPorId = new Map();
-        historicoData.forEach(item => {
-          if (!processosPorId.has(item.Processo)) {
-            processosPorId.set(item.Processo, []);
-          }
-          processosPorId.get(item.Processo).push(item);
-        });
-
-        // Para cada processo, calcula os dias desde a última movimentação
-        let atrasados = 0;
-        processosPorId.forEach((registros) => {
-          if (registros.length > 0) {
-            // Ordena os registros por data, mais recente primeiro
-            registros.sort((a, b) => 
-              new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()
-            );
-
-            const ultimaData = new Date(registros[0]['Data/Hora']);
-            const hoje = new Date();
-            const diasDesdeUltima = Math.floor(
-              (hoje.getTime() - ultimaData.getTime()) / (1000 * 60 * 60 * 24)
-            );
-
-            if (diasDesdeUltima > 15) {
-              atrasados++;
+          return;
+        }
+        
+        const csvText = await response.text();
+        
+        // Parse CSV (melhorado para lidar com campos entre aspas)
+        try {
+          const lines = csvText.split('\n');
+          const headers = lines[0].replace(/"/g, '').split(',');
+          
+          const parsedData: CsvHistoricoItem[] = [];
+          
+          for (let i = 1; i < lines.length; i++) {
+            if (lines[i].trim() === '') continue;
+            
+            // Lidar com valores entre aspas que possam conter vírgulas
+            const values: string[] = [];
+            let line = lines[i];
+            let inQuotes = false;
+            let currentValue = '';
+            
+            for (let j = 0; j < line.length; j++) {
+              const char = line[j];
+              
+              if (char === '"') {
+                inQuotes = !inQuotes;
+              } else if (char === ',' && !inQuotes) {
+                values.push(currentValue.replace(/"/g, ''));
+                currentValue = '';
+              } else {
+                currentValue += char;
+              }
             }
+            
+            if (currentValue) {
+              values.push(currentValue.replace(/"/g, ''));
+            }
+            
+            // Criar objeto com os valores
+            const item: Record<string, string> = {};
+            headers.forEach((header, index) => {
+              item[header] = values[index] || '';
+            });
+            
+            parsedData.push(item as CsvHistoricoItem);
           }
-        });
+          
+          console.log('Dados CSV processados:', parsedData);
+          setHistoricoData(parsedData);
 
-        setOverdueProcessesCount(atrasados);
-      }
+          // Contagem de processos únicos
+          const uniqueProcessCount = new Set(parsedData.map(item => item.Processo)).size;
+          setTotalProcesses(uniqueProcessCount);
 
-      // Fetch unique processes with objects
-      const { data: uniqueProcessData, error: uniqueProcessError } = await supabase
-        .from('historico')
-        .select('Processo, Objeto')
-        .neq('Processo', null);
+          // Calcula Processos Concluídos
+          const concluidosSet = new Set<string>();
+          parsedData.forEach(item => {
+            if (item.Documento?.includes('Homologação')) {
+              concluidosSet.add(item.Processo);
+            }
+          });
+          setConcludedCount(concluidosSet.size);
 
-      if (uniqueProcessError) {
-        console.error('Erro ao carregar processos únicos:', uniqueProcessError);
-      } else {
-        const uniqueProcessesSet = new Set(uniqueProcessData.map(item => `${item.Processo} - ${item.Objeto}`));
-        setUniqueProcesses(Array.from(uniqueProcessesSet));
-      }
+          // Agrupa os processos
+          const processosPorId = new Map<string, CsvHistoricoItem[]>();
+          parsedData.forEach(item => {
+            if (!processosPorId.has(item.Processo)) {
+              processosPorId.set(item.Processo, []);
+            }
+            processosPorId.get(item.Processo)?.push(item);
+          });
 
-      // Processar dados para calcular a métrica de documentos atrasados
-      if (processedData.length > 0) {
-        const overdueDocsCount = processedData.reduce((count, item) => {
-          if (item.diasEntreDocumentos > 15) {
-            return count + 1;
-          }
-          return count;
-        }, 0);
-        setOverdueDocumentsCount(overdueDocsCount);
+          // Para cada processo, calcula os dias desde a última movimentação
+          let atrasados = 0;
+          processosPorId.forEach((registros) => {
+            if (registros.length > 0) {
+              // Ordena os registros por data, mais recente primeiro
+              registros.sort((a, b) => 
+                new Date(b['Data/Hora']).getTime() - new Date(a['Data/Hora']).getTime()
+              );
+
+              const ultimaData = new Date(registros[0]['Data/Hora']);
+              const hoje = new Date();
+              const diasDesdeUltima = Math.floor(
+                (hoje.getTime() - ultimaData.getTime()) / (1000 * 60 * 60 * 24)
+              );
+
+              if (diasDesdeUltima > 15) {
+                atrasados++;
+              }
+            }
+          });
+
+          setOverdueProcessesCount(atrasados);
+
+          // Processos únicos com objetos
+          const uniqueProcessData = parsedData.filter(item => item.Processo && item.Processo.trim() !== '');
+          
+          // Criar o conjunto de processos únicos com seus objetos
+          const uniqueProcessesSet = new Set<string>();
+          uniqueProcessData.forEach(item => {
+            const processo = item.Processo;
+            const objeto = item.Objeto || '(Sem objeto)';
+            uniqueProcessesSet.add(`${processo} - ${objeto}`);
+          });
+          
+          setUniqueProcesses(Array.from(uniqueProcessesSet));
+          console.log('Processos únicos encontrados:', Array.from(uniqueProcessesSet));
+        } catch (error) {
+          console.error('Erro ao processar CSV:', error);
+        }
+
+        // Processar dados para calcular a métrica de documentos atrasados
+        if (processedData.length > 0) {
+          const overdueDocsCount = processedData.reduce((count, item) => {
+            if (item.diasEntreDocumentos > 15) {
+              return count + 1;
+            }
+            return count;
+          }, 0);
+          setOverdueDocumentsCount(overdueDocsCount);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados do CSV:', error);
       }
     };
 
@@ -196,15 +248,24 @@ const Dashboard = () => {
       }
     });
 
-    return Object.entries(docTimes)
+    const sortedDocuments = Object.entries(docTimes)
       .filter(([documento]) => documento.trim() !== '')
       .map(([documento, { maxDias, lastDate }]) => ({
         documento,
         maxDias,
         lastDate,
       }))
-      .sort((b, a) => new Date(b.lastDate).getTime() - new Date(a.lastDate).getTime())
-      .slice(0, 10);
+      .sort((b, a) => (a.maxDias as number) - (b.maxDias as number)) // Sort by maxDias in descending order
+      .slice(0, 10) // Take the top 10
+
+    // Add the "Desde a última movimentação" as the 11th point
+    sortedDocuments.push({
+      documento: 'Desde a última movimentação',
+      maxDias: 0, // or any other value you want to represent
+      lastDate: new Date().toISOString(),
+    });
+
+    return sortedDocuments;
   };
 
   useEffect(() => {
@@ -299,16 +360,58 @@ const Dashboard = () => {
   }, [selectedProcess, historicoData]);
 
   const formatDate = (dateString) => {
+    if (!dateString) return '';
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    return date.toLocaleDateString('pt-BR');
   };
 
   const filteredProcesses = uniqueProcesses.filter(processo =>
     processo.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const downloadPDF = () => {
+    const element = document.getElementById('history-table-container');
+    if (element) {
+      html2canvas(element, {
+        scale: 2, // Aumenta a qualidade
+        useCORS: true,
+        logging: false,
+        scrollY: -window.scrollY // Corrige o problema de scrolling
+      }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('l', 'mm', 'a4'); // Orientação paisagem para tabelas
+        
+        // Configurações de página
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        
+        // Calcular a altura proporcional da imagem
+        const imgWidth = pageWidth - 20; // Margem de 10mm em cada lado
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        // Adicionar a imagem à primeira página
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+        
+        // Se a imagem for maior que a altura da página, adicionar páginas adicionais
+        let heightLeft = imgHeight;
+        let position = 10;
+        
+        // Subtrai a altura da primeira página
+        heightLeft -= (pageHeight - 20);
+        position = 0 - (pageHeight - 20);
+        
+        // Adicionar páginas adicionais se necessário
+        while (heightLeft > 0) {
+          pdf.addPage();
+          position += (pageHeight - 20);
+          pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+          heightLeft -= (pageHeight - 20);
+        }
+        
+        pdf.save(`histórico_${selectedProcess.split(' - ')[0]}.pdf`);
+      });
+    }
+  };
 
   return (
     <Layout>
@@ -402,12 +505,20 @@ const Dashboard = () => {
             <CardHeader>
               <CardTitle>Histórico do Processo</CardTitle>
               <CardDescription>Todos os registros do histórico do processo {selectedProcess}</CardDescription>
+              {/* Botão de exportação desabilitado temporariamente
+              <button 
+                onClick={downloadPDF} 
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              >
+                Exportar Histórico como PDF
+              </button>
+              */}
             </CardHeader>
             <CardContent>
               {processedData.length === 0 ? (
                 <p>Nenhum dado disponível para o processo selecionado.</p>
               ) : (
-                <div className="max-h-[500px] overflow-y-auto">
+                <div id="history-table-container" className="max-h-[475px] overflow-y-auto">
                   <Table>
                     <TableHeader className="sticky top-0 bg-white z-10">
                       <TableRow>
@@ -422,7 +533,16 @@ const Dashboard = () => {
                     </TableHeader>
                     <TableBody>
                       {processedData.map((item) => (
-                        <TableRow key={item.id}>
+                        <TableRow
+                          key={item.id}
+                          style={{
+                            backgroundColor: 
+                              typeof item.diasEntreDocumentos === 'number' && 
+                              Math.abs(item.diasEntreDocumentos) > 15 
+                                ? '#dce9ef' 
+                                : 'transparent',
+                          }}
+                        >
                           <TableCell>{formatDate(item['Data/Hora'])}</TableCell>
                           <TableCell>{item.Unidade}</TableCell>
                           <TableCell>{item.CPF}</TableCell>
@@ -497,47 +617,6 @@ const Dashboard = () => {
                 <Bar dataKey="Dias_Acumulados" stackId="a" fill="green" name="Dias Acumulados" />
                 <Bar dataKey="Aparicao" stackId="a" fill="blue" name="Aparições" />
               </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      )}
-
-      {documentMetrics.length > 0 && (
-        <Card className="border-sei-100 mt-6">
-          <CardHeader>
-            <CardTitle>Linha do Tempo do Processo</CardTitle>
-            <CardDescription>
-              O gráfico mostra a linha do tempo do processo, desde a última movimentação até a data atual, considerando o top 10 de documentos que tiveram o maior intervalo de tempo entre movimentações
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart
-                data={documentMetrics}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <XAxis 
-                  dataKey="documento" 
-                  angle={-45}
-                  textAnchor="end"
-                  height={100}
-                  interval={0}
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis />
-                <Tooltip 
-                  formatter={(value) => [`${value} dias`, 'Tempo Máximo']}
-                  labelFormatter={(label) => `Documento: ${label}`}
-                />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="maxDias"
-                  stroke="#0c93e4"
-                  name="Dias entre Movimentações"
-                  activeDot={{ r: 8 }}
-                />
-              </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
