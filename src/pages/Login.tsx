@@ -51,7 +51,7 @@ const Login = () => {
           <div className="flex items-center gap-2">
             <FileSearch className="h-8 w-8 text-white" />
             <h1 className="text-2xl md:text-3xl font-bold text-white">
-              SEI Vista Azul
+              Timeline SEI
             </h1>
           </div>
         </div>
@@ -74,7 +74,7 @@ const Login = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="seu@email.com"
+                  // placeholder="seu@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -89,7 +89,7 @@ const Login = () => {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Sua senha"
+                    // placeholder="Sua senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required

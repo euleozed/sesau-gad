@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Sidebar from './Sidebar';
 import { useAuth } from '@/contexts/AuthContext';
@@ -19,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="flex h-screen bg-background">
       <Sidebar />
       <main className="flex-1 overflow-y-auto">
-        <div className="container py-6 px-4 md:px-6">
+        <div id="dashboard-container" className="container mx-auto p-6">
           {children}
         </div>
       </main>
