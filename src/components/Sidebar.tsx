@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Menu, X, BarChart2 } from 'lucide-react';
+import { LayoutDashboard, Menu, X, BarChart2, FileText } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -17,6 +17,7 @@ const Sidebar = () => {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
     { name: 'Produção por Setor', path: '/producao', icon: <BarChart2 className="h-5 w-5" /> },
+    { name: 'Processos', path: '/processos', icon: <FileText className="h-5 w-5" /> },
   ];
 
   return (

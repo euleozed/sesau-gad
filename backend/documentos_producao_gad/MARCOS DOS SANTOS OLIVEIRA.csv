@@ -1,98 +1,203 @@
-"id_unidade","Textbox32","Ano","Textbox24","Mes","Textbox44","IdDocumento1","Documento1","Documento","IdDocumento","protocolo_formatado","Textbox17","Nome","Setor"
-"SESAU-GAD","100","2025","4","1","1","4","Despacho","Agente Administrativo","1","56913192","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2025","4","1","1","4","Despacho","Agente Administrativo","1","56910246","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2025","4","1","1","4","Despacho","Agente Administrativo","1","56852818","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2025","4","1","1","4","Despacho","Agente Administrativo","1","56169192","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55960120","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55876040","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55863692","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55860220","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55758504","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55706317","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55640274","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55538837","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55480613","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55394560","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55398843","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55314488","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55271325","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55282067","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","12","1","15","Despacho","Agente Administrativo","1","55277789","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Requerimento","Assessor(a)","1","54364237","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Requerimento","Agente Administrativo","1","54363006","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Despacho","Agente Administrativo","1","55083552","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Despacho","Agente Administrativo","1","55037865","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Despacho","Agente Administrativo","1","55015703","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Despacho","Agente Administrativo","1","54508777","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Despacho","Agente Administrativo","1","54513064","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","11","2","8","Despacho","Agente Administrativo","1","54511643","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","54252783","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","54251653","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","54032374","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","53952989","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","53939528","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","53912492","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","53901480","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","53623313","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Despacho","Agente Administrativo","1","53496934","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Termo de Encerramento","Agente Administrativo","1","54270672","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","10","2","11","Termo de Encerramento","Agente Administrativo","1","54039083","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","9","2","4","Ofício","Agente Administrativo","1","52494292","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","9","2","4","Despacho","Agente Administrativo","1","52749549","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","9","2","4","Despacho","Agente Administrativo","1","52435623","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","9","2","4","Despacho","Agente Administrativo","1","52359278","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Informação","Agente Administrativo","1","52091239","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","52148951","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","52077886","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","52050259","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51800033","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51791909","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51614553","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51436067","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51431899","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51393001","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","8","2","11","Despacho","Agente Administrativo","1","51374855","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","51306353","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50738476","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50641724","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50351933","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50389085","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50370374","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50364680","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50358600","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","7","1","9","Despacho","Agente Administrativo","1","50266249","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Termo","Administrador(a)","1","49128361","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Relatório","Administrador(a)","1","49135826","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Checklist","Administrador(a)","1","49135869","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Ofício","Administrador(a)","1","49661967","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","50161819","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","50111389","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","50110484","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","50086877","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","49988556","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","49935733","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","49932105","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","49857509","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","49840589","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Agente Administrativo","1","49819565","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Assessor(a)","1","49408130","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Assessor(a)","1","49306947","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Assessor(a)","1","49221911","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Assessor(a)","1","49223186","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Assessor(a)","1","49190341","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","6","5","23","Despacho","Assessor(a)","1","49291394","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Requerimento","Agente Administrativo","1","48312895","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Termo de Responsabilidade","Assessor(a)","1","48541516","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Memorando","Assessor(a)","1","48640256","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","49087609","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","49088097","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","49044839","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","49045904","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","49043849","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48968830","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48808159","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48731939","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48693326","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48571800","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48550978","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
-"SESAU-GAD","100","2024","96","5","4","15","Despacho","Assessor(a)","1","48523216","100","MARCOS DOS SANTOS OLIVEIRA","GAD"
+﻿id_unidade,Textbox32,Ano,Textbox24,Mes,Textbox44,IdDocumento1,Documento1,Documento,IdDocumento,protocolo_formatado,Textbox17
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059688635,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059634120,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059549292,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059499321,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059322610,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059234587,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059177788,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059083916,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059074787,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0059071031,204
+SESAU-GAD,204,2025,108,04,1,11,Despacho,Agente Administrativo,1,0058974069,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058797972,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058793487,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058792820,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058792072,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058784257,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058779780,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058743022,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058741025,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058629346,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058600691,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058599759,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058565250,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058565057,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058564696,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058563863,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058395565,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058393625,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058345312,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058330147,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058325812,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058277695,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058296305,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058289738,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058288994,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058288591,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058288197,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058274379,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058276842,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058254143,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058226603,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058226117,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058225659,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058193931,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058198372,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058195318,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058181329,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058180371,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058179489,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058157674,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058155246,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058154601,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058133438,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058082245,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058055183,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058054065,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058034413,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0058019773,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0057949943,204
+SESAU-GAD,204,2025,108,03,1,49,Despacho,Agente Administrativo,1,0057914400,204
+SESAU-GAD,204,2025,108,02,2,42,Checklist,Agente Administrativo,1,0057299550,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057827875,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057782278,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057776630,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057774214,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057743456,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057731985,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057731319,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057730543,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057730174,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057720676,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057640489,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057639706,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057591284,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057604523,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057595634,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057546267,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057544512,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057502555,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057497603,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057155827,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057437840,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057367179,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057307920,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057262035,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057261841,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057254163,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057251992,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057237855,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057237602,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057236591,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057234976,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057177097,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057170170,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057169342,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057163061,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057156155,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0057120872,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0056965783,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0056998687,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0056997264,204
+SESAU-GAD,204,2025,108,02,2,42,Despacho,Agente Administrativo,1,0056976168,204
+SESAU-GAD,204,2025,108,01,1,6,Despacho,Agente Administrativo,1,0056942260,204
+SESAU-GAD,204,2025,108,01,1,6,Despacho,Agente Administrativo,1,0056939226,204
+SESAU-GAD,204,2025,108,01,1,6,Despacho,Agente Administrativo,1,0056913192,204
+SESAU-GAD,204,2025,108,01,1,6,Despacho,Agente Administrativo,1,0056910246,204
+SESAU-GAD,204,2025,108,01,1,6,Despacho,Agente Administrativo,1,0056852818,204
+SESAU-GAD,204,2025,108,01,1,6,Despacho,Agente Administrativo,1,0056169192,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055960120,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055876040,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055863692,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055860220,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055758504,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055706317,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055640274,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055538837,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055480613,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055394560,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055398843,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055314488,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055271325,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055282067,204
+SESAU-GAD,204,2024,96,12,1,15,Despacho,Agente Administrativo,1,0055277789,204
+SESAU-GAD,204,2024,96,11,2,8,Requerimento,Assessor(a),1,0054364237,204
+SESAU-GAD,204,2024,96,11,2,8,Requerimento,Agente Administrativo,1,0054363006,204
+SESAU-GAD,204,2024,96,11,2,8,Despacho,Agente Administrativo,1,0055083552,204
+SESAU-GAD,204,2024,96,11,2,8,Despacho,Agente Administrativo,1,0055037865,204
+SESAU-GAD,204,2024,96,11,2,8,Despacho,Agente Administrativo,1,0055015703,204
+SESAU-GAD,204,2024,96,11,2,8,Despacho,Agente Administrativo,1,0054508777,204
+SESAU-GAD,204,2024,96,11,2,8,Despacho,Agente Administrativo,1,0054513064,204
+SESAU-GAD,204,2024,96,11,2,8,Despacho,Agente Administrativo,1,0054511643,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0054252783,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0054251653,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0054032374,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0053952989,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0053939528,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0053912492,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0053901480,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0053623313,204
+SESAU-GAD,204,2024,96,10,2,11,Despacho,Agente Administrativo,1,0053496934,204
+SESAU-GAD,204,2024,96,10,2,11,Termo de Encerramento,Agente Administrativo,1,0054270672,204
+SESAU-GAD,204,2024,96,10,2,11,Termo de Encerramento,Agente Administrativo,1,0054039083,204
+SESAU-GAD,204,2024,96,09,2,4,Ofício,Agente Administrativo,1,0052494292,204
+SESAU-GAD,204,2024,96,09,2,4,Despacho,Agente Administrativo,1,0052749549,204
+SESAU-GAD,204,2024,96,09,2,4,Despacho,Agente Administrativo,1,0052435623,204
+SESAU-GAD,204,2024,96,09,2,4,Despacho,Agente Administrativo,1,0052359278,204
+SESAU-GAD,204,2024,96,08,2,11,Informação,Agente Administrativo,1,0052091239,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0052148951,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0052077886,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0052050259,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051800033,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051791909,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051614553,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051436067,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051431899,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051393001,204
+SESAU-GAD,204,2024,96,08,2,11,Despacho,Agente Administrativo,1,0051374855,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0051306353,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050738476,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050641724,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050351933,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050389085,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050370374,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050364680,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050358600,204
+SESAU-GAD,204,2024,96,07,1,9,Despacho,Agente Administrativo,1,0050266249,204
+SESAU-GAD,204,2024,96,06,5,23,Termo,Administrador(a),1,0049128361,204
+SESAU-GAD,204,2024,96,06,5,23,Relatório,Administrador(a),1,0049135826,204
+SESAU-GAD,204,2024,96,06,5,23,Checklist,Administrador(a),1,0049135869,204
+SESAU-GAD,204,2024,96,06,5,23,Ofício,Administrador(a),1,0049661967,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0050161819,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0050111389,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0050110484,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0050086877,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0049988556,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0049935733,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0049932105,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0049857509,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0049840589,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Agente Administrativo,1,0049819565,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Assessor(a),1,0049408130,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Assessor(a),1,0049306947,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Assessor(a),1,0049221911,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Assessor(a),1,0049223186,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Assessor(a),1,0049190341,204
+SESAU-GAD,204,2024,96,06,5,23,Despacho,Assessor(a),1,0049291394,204
+SESAU-GAD,204,2024,96,05,4,15,Requerimento,Agente Administrativo,1,0048312895,204
+SESAU-GAD,204,2024,96,05,4,15,Termo de Responsabilidade,Assessor(a),1,0048541516,204
+SESAU-GAD,204,2024,96,05,4,15,Memorando,Assessor(a),1,0048640256,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0049087609,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0049088097,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0049044839,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0049045904,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0049043849,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048968830,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048808159,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048731939,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048693326,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048571800,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048550978,204
+SESAU-GAD,204,2024,96,05,4,15,Despacho,Assessor(a),1,0048523216,204
+
