@@ -118,10 +118,13 @@ const Processos = () => {
 
   return (
     <Layout>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold text-sei-800">Processos Atrasados</h1>
+      </div>
       <div className="container mx-auto p-6">
         <Card>
           <CardHeader>
-            <CardTitle>Processos Atrasados</CardTitle>
+            <CardTitle>Tabela de Processos com mais de 15 dias sem movimentação</CardTitle>
           </CardHeader>
           <CardContent>
             {loading && (
