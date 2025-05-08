@@ -24,6 +24,8 @@ const RadarChartComponent = ({ radarData }) => (
 );
 
 
+
+
 interface UserMetric {
   cpf: string;
   Dias_Maximo: number;
